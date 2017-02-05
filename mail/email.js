@@ -27,11 +27,7 @@ var email = {
 		        type: 'text/plain',
 		        value: 'Someone has added you as a friend!',
 		      },
-		    ]/*,
-		    reply_to: {
-		    	email: senderMail,
-		    	name: Sname
-		    }*/
+		    ]
 		  },
 		});
 
