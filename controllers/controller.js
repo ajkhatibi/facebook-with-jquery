@@ -11,7 +11,7 @@ router.get('/', function(req, res){
 
 router.get('/friend-book', function(req, res){
 	res.render('home', {noOne: req.flash('noUser')});
-	// res.render('register', {existsMsg: req.flash('Exists')});
+	
 });
 
 router.get('/friend-book/profile', function(req, res){
@@ -20,7 +20,7 @@ router.get('/friend-book/profile', function(req, res){
 			id: req.session.user.id
 		},
 		include: [{
-			model: db.users, as: 'Friend' //find all users associated as friends
+			model: db.users, as: 'Friend' 
 		}, {
 			model: db.users, as: 'Sender'
 		}]
@@ -30,9 +30,7 @@ router.get('/friend-book/profile', function(req, res){
 			userFriend: dbData[0].Friend,
 			userMsg: dbData[0].Sender
 		}
-			console.log(dbData);
 
-		//res.json(hbsObject);
 		res.render('profile', hbsObject);
 	});
 });
@@ -43,13 +41,12 @@ router.post('/friend-book/profile', function(req, res){
 			id: req.body.profileID
 		},
 		include: [{
-			model: db.users, as: 'Friend' //find all users associated as friends
+			model: db.users, as: 'Friend' 
 		}, {
 			model: db.users, as: 'Sender'
 		}]
 
 	}).then(function(data){
-		console.log("profile data", data);
 
 		var userData = {
 			id: data[0].id,
@@ -76,8 +73,8 @@ router.get('/friend-book/login', function(req, res){
 		success: req.flash('success_msg'),
 		request: req.flash('friendPerm')
 	}
-	// req.flash('friendPerm', 'Please login to add friends.');
-	res.render('login', messages /*{messages: req.flash('success_msg')} //Alternate */);
+	
+	res.render('login', messages);
 });
 
 router.get('/friend-book/register', function(req, res){
@@ -112,7 +109,7 @@ router.post('/friend-book/search/user', function(req, res){
 			req.flash('noUser', 'No one by that name.');
 			res.redirect('/friend-book');	
 		}
-		// res.json()
+		
 	});
 });
 
@@ -127,7 +124,6 @@ router.post('/friend-book/register', function(req, res){
 	var password2 = req.body.password2;
 	var description = req.body.description
 
-	//Using express validator*************************************************************************
 
 	req.checkBody('name', 'Must type in name.').notEmpty();
 	req.checkBody('username', 'Must type in Username.').notEmpty();
@@ -137,42 +133,15 @@ router.post('/friend-book/register', function(req, res){
 	req.checkBody('password2', 'Passwords do not match.').equals(req.body.password);
 	req.checkBody('description', 'Must type in something about yourself.').notEmpty();
 
-	//Alternate method
-
-   	  // req.checkBody({
-
-  //       'username': {
-  //           notEmpty: true,
-  //           errorMessage: 'Username is required'
-  //       },
-
-  //       'email': {
-  //           notEmpty: true,
-  //           isEmail: {
-  //               errorMessage: 'Invalid Email Address'
-  //           },
-  //           errorMessage: 'Email is required'
-  //       },
-
-  //       'password': {
-  //           notEmpty: true,
-  //           errorMessage: 'Password is required'
-  //       },
-
-  //       'password_confirmation': {
-  //           notEmpty: true,
-  //           errorMessage: 'Password Confirmation is required'
-  //       }
 
 	var errors = req.validationErrors();
 
-	//If there are errors, render the errors
+
 	if(errors){
 		res.render('register', {
 			errors: errors
 		});
 	}else{
-	//if no errors, create user in database then render user data onto profile page.
 
 		db.users.findOne({
 			where: {
@@ -185,27 +154,15 @@ router.post('/friend-book/register', function(req, res){
 			}else{
 
 				db.users.create(req.body).then(function(data){
-					console.log("register data", data);
-					
-					// console.log("poop", data.id);
-					// req.session.user = {
-					// 	id: data.id,
-					// 	name: data.name,
-					// 	username: data.username,
-					// 	email: data.email,
-					// 	description: data.description
-					// };
 
-					req.flash('success_msg', 'Success! Welcome to Book Face! Please login.');
+				req.flash('success_msg', 'Success! Welcome to Book Face! Please login.');
 
-					// res.render("profile", req.session.user);
 					res.redirect('/friend-book/login')
 
 				});
 			}
 		})
 	}
-//***************************************************************************************************
 });
 
 
@@ -244,14 +201,12 @@ router.post('/friend-book/requests', function(req, res) {
 			userId: req.session.user.id,
 			FriendId: req.body.FriendID
 		}).then(function(data){
-			console.log(data);
-			//res.json(data)
+
 			var toEmail = req.body.friendReqEmail;
 			var toEmailName = req.session.user.name;
-			console.log("To Email", toEmail);
-			console.log("To Email Req", req.body.friendReqEmail);
+
 			email.send(toEmail, toEmailName, function(){
-				// res.redirect('/contact');	
+					
 				res.redirect('/friend-book/profile');
 			});
 		});
@@ -265,17 +220,13 @@ router.post('/friend-book/requests', function(req, res) {
 
 router.get('/friend-book/all', function(req, res){
 
-	db.events.findAll({
-	//    body: req.body.post,
+  db.events.findAll({
+
 	where: {
 		userId: req.session.user.id
 	}
   })
-    // pass the result of our call
   .then(function(post) {
-      // log the result to our terminal/bash window
-    console.log('THIS IS MY POST', post);
-      // redirect
     res.send(post)
   });
 });
@@ -297,12 +248,5 @@ router.post('/friend-book/home', function(req, res){
 		
 	
 });
-
-
-// app.post('/friend-book/register',
-//   passport.authenticate('local', { successRedirect: '/',
-//                                    failureRedirect: '/login',
-//                                    failureFlash: true })
-// );
 
 module.exports = router;
