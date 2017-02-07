@@ -9,17 +9,20 @@
 		  	{{/if}}
 		  </div>
 		  <div class="media-body">
-		    <h4 class="media-heading">{{this.name}}</h4>
-		    <h4 class="media-heading">{{this.email}}</h4>
-		    <h4 class="media-heading">{{this.id}}</h4>
+		  	<h4 class="media-heading proName">Name:</h4>
+		    <h4 class="media-heading proName2">{{this.name}}</h4>
+		    <h4 class="media-heading proEmail">Email</h4>
+		    <h4 class="media-heading proEmail2">{{this.email}}</h4>
+		    <h4 class="media-heading proID">Member ID</h4>
+		    <h4 class="media-heading proID2">{{this.id}}</h4>
 		    <form method="POST" action="/friend-book/profile?member_id={{this.id}}">
                 <input type="hidden" name="profileID" value="{{this.id}}">
-                <button type="submit">Profile Page</button>
+                <button class="profile" type="submit">Profile Page</button>
             </form>
 	        <form method="POST" action="/friend-book/requests">
 	        	<input type="hidden" name="friendReqEmail" value="{{this.email}}">
                 <input type="hidden" name="FriendID" value="{{this.id}}">
-                <button type="submit">I want to be friends</button>
+                <button class="friendReq" type="submit">I want to be friends</button>
             </form>
 		  </div>
 		</div>

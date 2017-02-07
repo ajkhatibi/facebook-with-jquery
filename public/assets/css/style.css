@@ -12,9 +12,31 @@ body {
     width: 100px;
 }
 
+.proName, .proEmail, .proID{
+  text-decoration: underline;
+  /*margin: 15px;*/
+}
+
+.proName2, .proEmail2, .proID2{
+  padding-bottom: 10px;
+}
+
 .searchUser{
   margin-left: 60px;
 }
+
+.profile{
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: cornflowerblue;
+}
+
+.friendReq{
+    padding: 10px;
+    background-color: violet;
+}
+
 #video{
   display: none;
 }
