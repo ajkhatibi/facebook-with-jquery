@@ -4,6 +4,17 @@ body {
   padding-bottom: 20px;
 }
 
+#searchAll{
+    margin-left: 150px;
+    margin-bottom: 30px;
+    background-color: palegreen;
+    height: 50px;
+    width: 100px;
+}
+
+.searchUser{
+  margin-left: 60px;
+}
 #video{
   display: none;
 }
