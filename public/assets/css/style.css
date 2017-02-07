@@ -12,6 +12,9 @@ body {
     width: 100px;
 }
 
+.form-register-heading{
+  margin-left: 195px;
+}
 .proName, .proEmail, .proID{
   text-decoration: underline;
   /*margin: 15px;*/
